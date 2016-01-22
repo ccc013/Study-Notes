@@ -10,7 +10,7 @@
 <h3 id="流程">一. 日常使用流程</h3>
 日常使用只要记住下图中6个命令即可:
 
-![Git 使用流程图](E:\Study-Notes\images\Git使用流程图.png)
+![Git 使用流程图](https://github.com/ccc013/Study-Notes/tree/master/images/Git使用流程图.png)
 
 总结下，新建一个仓库到将其推送到远程仓库，即Github上，可以根据以下命令：
 
