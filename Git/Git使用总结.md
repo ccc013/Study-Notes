@@ -27,6 +27,8 @@
     # 非第一次推送到Github上
     $ git push origin master
 
+这里要注意，在github上建立一个远程仓库的时候，可能会添加READ.md或者是一个.gitgnore等文件，并且这些文件是本地仓库中没有的时候，在第一次推送本地master分支内容前，需要使用命令`git pull <remote> <branch>`，这里的remote，也就是github上对应仓库的地址，可以使用在关联仓库时使用的SSH地址，而branch，初次创建的分支都是master，只有执行了这个操作，才可以成功push本地的文件，否则会出错。
+
 一些专有名词的解释：
 * Workspace: 工作区
 * Index / Stage: 暂存区
