@@ -131,6 +131,7 @@ Status GetElem(SqList L, int i, ElemType *e)
 * 无须为表示表中元素之间的逻辑关系而增加额外的存储空间| * 插入和删除操作需要移动大量元素，其时间复杂度是`O(n)`
 * 可以快读地存取表中任一位置的元素，时间复杂度`O(1)`  | * 当线性表长度变化较大时，难以确定存储空间的容量,会造成存储空间的"碎片"
 
+代码例子--[顺序线性表](https://github.com/ccc013/Study-Notes/blob/master/DataStructe%20%26%20Algorithm/CodeExample/LinearList_Order.md)
 
 
 #### 5. 线性表的链式存储结构
@@ -210,6 +211,9 @@ typedef struct Node* LinkList;  // 头指针
 * 对于顺序存储结构，查找的时间性能是O(1),而插入和删除操作需要平均移动表长一半的元素，时间为O(n);
 * 对于单链表，查找的时间是O(n),而插入和删除操作的时间是O(1).
 
+
+代码例子--[单链表](https://github.com/ccc013/Study-Notes/blob/master/DataStructe%20%26%20Algorithm/CodeExample/LinkList.md)
+
 #### 6. 静态链表
 
     用数组表示的链表叫做静态链表。数组的元素都是由两个数据域组成，data和cur。前者用于存储数据，而后者相当于单链表中的next指针，存放该元素的后继在数组中的下标，因此也叫cur为游标。
@@ -227,7 +231,57 @@ typedef struct
 
   另外，数组的第一个和最后一个元素作为特殊元素处理，不存数据，我们通常把未被使用的数组元素称为备用链表。**而数组第一个元素，即下标为0的元素的cur就存放备用链表的第一个结点的下标；而数组最后一个元素的cur则存放第一个有数值得元素的下标，相当于单链表中的头结点作用，当整个链表为空时，则是0。**
   
- 
+根据书上给的代码写出的例子在这:[StaticLinkList](https://github.com/ccc013/Study-Notes/blob/master/DataStructe%20%26%20Algorithm/CodeExample/StaticLinkList.md) 
+
+
+#### 7. 循环链表
+
+    将单链表中终端结点的指针端由空指针改为指向头结点，就使整个单链表形成了一个环，这种头尾相接的单链表称为但循环链表，简称循环链表(circular linked list)。
+
+    单链表和循环链表的主要差异就在于循环的判断条件上，原来是判断`p->next`是否为空，现在是`p->next`不等于头结点，则循环未结束。
+    
+    循环链表中如果使用指向终端结点的尾指针`rear`表示，那么此时查找开始结点和终端结点都是O(1)，因为终端结点用指针`rear`表示，而开始结点就是`rear->next->next`。
+    
+    如果要合并两个循环链表A和B，其分别有尾指针`rearA`，`rearB`，则可以如下操作
+    
+    
+```
+p = rearA->next;    // 保存A表的头结点
+rearA->next = rearB->next->next;    // 将本是B表的第一个结点（非头结点）赋值给rearA->next
+q = rearB->next;
+rearB->next = p;
+free(q);    // 释放B表的头结点
+```
+
+#### 8. 双向链表
+
+    双向链表(double linked list) 是在单链表的每个结点中，再设置一个指向其前驱结点的指针域。
+
+双向链表的存储结构
+
+```
+typedef struct DulNode
+{
+    ElemType data;
+    struct DuLNode* prior;
+    struct DuLNode* next;
+}DulNode, *DuLinkList;
+```
+
+代码例子---[循环的双向链表](https://github.com/ccc013/Study-Notes/blob/master/DataStructe%20%26%20Algorithm/CodeExample/DulLinkList.md)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
