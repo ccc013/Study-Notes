@@ -15,5 +15,5 @@ C++有阅读《C++ primer plus》的读书笔记，完成前面13章的阅读笔
 
 ### 机器学习
 
-主要是Coursea上AndrewNg的[机器学习课程](https://www.coursera.org/learn/machine-learning)，目前完成前八周的笔记。
+主要是Coursea上AndrewNg的[机器学习课程](https://www.coursera.org/learn/machine-learning)，目前完成所有课程的笔记。
 
