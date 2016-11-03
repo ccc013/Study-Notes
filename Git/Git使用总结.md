@@ -6,7 +6,7 @@
 
 二. [使用总结](#使用总结)
 
-[遇到的问题和解决方法](#问题)
+三.[遇到的问题和解决方法](#问题)
 
 
 <h3 id="流程">一. 日常使用流程</h3>
@@ -46,7 +46,7 @@
 第二个选择是删除错误，那么可以使用命令`git checkout -- text.txt`,命令`git checkout`就是使用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
 
 
-<h3 id="问题">遇到的问题和解决方法</h3>
+<h3 id="问题">三.遇到的问题和解决方法</h3>
 ####1.如何删除github上的一个分支
 有时候在github上的一个仓库建立了一个不想要的分支，应该如何删除呢，参考了网上的文章后，发现可以通过新建一个空的版本库，然后直接将其推送到需要删除分支的github仓库上，这个分支就会被自动删除了。
 
@@ -77,6 +77,25 @@
     1. git remote rm origin
     2. git remote add origin SSH地址
     3. git push origin 
+
+#### 3. 出现如`remote: Invalid username or password`的错误信息
+
+在将本地代码提交到`github`时，即输入`git push origin master`后，出现错误信息如下：
+
+```shell
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/ccc013/CodingPractise.git/'
+```
+
+这里参考了[git invalid username or password](http://stackoverflow.com/questions/29297154/git-invalid-username-or-password)上的答案，输入如下命令：
+
+```shell
+git remote set-url origin git@github.com:ccc013/CodingPractise.git
+```
+
+然后再次输入命令`git push origin master`即可成功提交。
+
+
 
 参考的教程和文章有:
 
