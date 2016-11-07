@@ -47,7 +47,7 @@
 
 
 <h3 id="问题">三.遇到的问题和解决方法</h3>
-####1.如何删除github上的一个分支
+####1）如何删除github上的一个分支
 有时候在github上的一个仓库建立了一个不想要的分支，应该如何删除呢，参考了网上的文章后，发现可以通过新建一个空的版本库，然后直接将其推送到需要删除分支的github仓库上，这个分支就会被自动删除了。
 
 代码如下:
@@ -62,7 +62,7 @@
     $ git push remote_repo :remote_branch 
     (这里的冒号不能删除，remote_repo就是github上这个仓库的https地址，remote_branch就是要删除的分支名字)
 
-####2. push到github时，每次都要输入用户名和密码的问题
+####2） push到github时，每次都要输入用户名和密码的问题
 在github.com上 建立了一个小项目，可是在每次push的时候，都要输入用户名和密码，很是麻烦
 
 **原因是使用了https方式 push**
@@ -78,7 +78,7 @@
     2. git remote add origin SSH地址
     3. git push origin 
 
-#### 3. 出现如`remote: Invalid username or password`的错误信息
+#### 3） 出现如`remote: Invalid username or password`的错误信息
 
 在将本地代码提交到`github`时，即输入`git push origin master`后，出现错误信息如下：
 
@@ -94,6 +94,42 @@ git remote set-url origin git@github.com:ccc013/CodingPractise.git
 ```
 
 然后再次输入命令`git push origin master`即可成功提交。
+
+#### 4） 没有在github上添加公钥
+
+这个错误的具体信息如下：
+
+```shell
+Warning: Permanently added the RSA host key for IP address '192.30.253.113' to the list of known hosts. Permission denied (publickey). fatal: Could not read from remote repository. Please make sure y
+```
+
+这里参考[如何在github上添加公钥](http://www.cnblogs.com/qcwblog/p/5709720.html)这篇文章。具体步骤如下所示：
+
+1 可以用 ssh -T git@github.com去测试一下
+
+![img](http://images2015.cnblogs.com/blog/923829/201607/923829-20160726173600653-822778976.png)
+
+图上可以明显看出缺少了公钥
+
+2 直接上图
+
+![img](http://images2015.cnblogs.com/blog/923829/201607/923829-20160727084851341-167270095.png)
+
+\3. cat 一下  把出现的key 复制下来
+
+![img](http://images2015.cnblogs.com/blog/923829/201607/923829-20160727085024091-1309310232.png)
+
+4 .在github上添加刚刚生成的公钥
+
+![img](http://images2015.cnblogs.com/blog/923829/201607/923829-20160727085229481-635311296.png)
+
+![img](http://images2015.cnblogs.com/blog/923829/201607/923829-20160727085251559-1389913670.png)
+
+![img](http://images2015.cnblogs.com/blog/923829/201607/923829-20160727085332997-1227342030.png)
+
+![img](http://images2015.cnblogs.com/blog/923829/201607/923829-20160727085538497-118378956.png)
+
+正常完成这步后，再次输入向`github`提交代码应该是会成功的。
 
 
 
