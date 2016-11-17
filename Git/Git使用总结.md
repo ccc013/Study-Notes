@@ -131,6 +131,24 @@ Warning: Permanently added the RSA host key for IP address '192.30.253.113' to t
 
 正常完成这步后，再次输入向`github`提交代码应该是会成功的。
 
+#### 5）克隆某一个特定的远程分支
+
+正常克隆某个仓库的命令如下：
+
+```shell
+git clone [remote repository address] (file_name)
+```
+
+其中`file_name`是代码保存在本地电脑的文件夹名字。
+
+如果需要指定某个分支的代码，可以添加`-b <branch name>`，也就是命令如下：
+
+```shell
+git clone -b <branch name> [remote repository address] (file_name)
+```
+
+
+
 
 
 参考的教程和文章有:
