@@ -1,5 +1,7 @@
 ### Linux知识点
 
+* MMU 是Memory Manage Unit的缩写，即是存储管理单元，其功能是和物理内存之间进行地址转换 在CPU和物理内存之间进行地址转换，将地址从逻辑空间映映射到物理地址空间。
+
 ------
 
 ##### 文件、目录与磁盘格式
@@ -31,6 +33,14 @@
   6. 表示层： JPEG 、 MPEG 、 ASII - 
   7. 应用层： FTP 、 DNS 、 Telnet 、 SMTP 、 HTTP 、 WWW 、 NFS
 
+* **文件默认权限666     目录默认权限777 。 实际权限则减去umas**
+
+* **hosts文件是Linux系统上一个负责ip地址与域名快速解析的文件**，以ascii格式保存在/etc/目录下。hosts文件包含了ip地址与主机名之间的映射，还包括主机的别名。**在没有域名解析服务器的情况下，系统上的所有网络程序都通过查询该文件来解析对应于某个主机名的ip地址，否则就需要使用dns服务程序来解决**。通过可以将常用的域名和ip地址映射加入到hosts文件中，实现快速方便的访问
+
+* ​
+
+  ​
+
 ------
 
 ##### shell与shell script
@@ -52,11 +62,11 @@
 
 *   csh:调用 C shell。
 
-    Tcsh是csh的增强版，并且完全兼容csh。它不但具有csh的全部功能，还具有命令行编辑、拼写校正、可编程字符集、历史纪录、 [作业控制](http://baike.baidu.com/view/4509410.htm) 等功能，以及C语言风格的语法结构。
+      Tcsh是csh的增强版，并且完全兼容csh。它不但具有csh的全部功能，还具有命令行编辑、拼写校正、可编程字符集、历史纪录、 [作业控制](http://baike.baidu.com/view/4509410.htm) 等功能，以及C语言风格的语法结构。
 
-    AWK 是一种优良的文本处理工具， [Linux](http://baike.baidu.com/view/1634.htm) 及 [Unix](http://baike.baidu.com/view/8095.htm) 环境中现有的功能最强大的数据处理引擎之一, AWK 提供了极其强大的功能：可以进行样式装入、 [流控制](http://baike.baidu.com/view/1292763.htm) 、数学 [运算符](http://baike.baidu.com/view/425996.htm) 、进程 [控制语句](http://baike.baidu.com/view/1359886.htm) 甚至于内置的变量和函数。
+      AWK 是一种优良的文本处理工具， [Linux](http://baike.baidu.com/view/1634.htm) 及 [Unix](http://baike.baidu.com/view/8095.htm) 环境中现有的功能最强大的数据处理引擎之一, AWK 提供了极其强大的功能：可以进行样式装入、 [流控制](http://baike.baidu.com/view/1292763.htm) 、数学 [运算符](http://baike.baidu.com/view/425996.htm) 、进程 [控制语句](http://baike.baidu.com/view/1359886.htm) 甚至于内置的变量和函数。
 
-    SED: Stream EDitor
+      SED: Stream EDitor
 
 *   ​
 
@@ -80,6 +90,47 @@
 * 重启命令有`reboot`, `init 6`,` shutdow -r 时间`
 
 * `grep "牛客" fileName |wc –l` /*统计有多少个牛客信息*
+
+* tar 主要命令：
+
+  -c 创建包
+  -x 解包
+  -t 列出包中的内容
+  -r 增加文件到指定包中
+  -u 更新包中的文件
+
+  这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。下面的参数是根据需要在压缩或解压档案时可选的。
+
+  可选命令：
+
+  -j 创建或解开包时 使用bzip2 进行压缩或解压
+
+  -z 创建或解开包时 使用gzip 进行压缩或解压
+
+  -Z 创建或解开包时 使用compress 进行压缩或解压
+
+  -f 后面跟指定的包文件名
+
+  -v 显示打包/解包过程
+
+  -C 指定解包后的路径
+
+  因此，文件aaa打包为bak.tar的命令是`tar -cf bak.tar aaa`
+
+* 统计日志中ip登陆次数的命令有：
+
+  * `cat catalina.log  | awk -F ' ' '{print $3}' | sort | uniq -c | wc -l`
+  * `cat catalina.log  | awk '{print $3}' | sort -klnr | uniq -c | wc -l`
+
+  知识点有：
+
+  1、`awk -F ' ' '{print $3}' `指定空格是分隔符进行分割，取第三个。（不指定**默认分隔符也是空格**）
+
+  2、`uniq -c`（uniq命令可以去除排序过的文件中的重复行，因此uniq经常和sort合用。也就是说，**为了使uniq起作用，所有的重复行必须是相邻的。**参数 - c ：进行计数）
+
+  3、`wc -l `行计数。
+
+* ​
 
   ​
 
