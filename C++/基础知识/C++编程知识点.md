@@ -975,7 +975,40 @@ x为整型，请用位运算实现x%8
 >
 > 因此，上述答案是 **x & 7**
 
+###### 4) 实现一个memcpy函数
 
+实现代码如下：
+
+```c++
+// 实现memcpy函数
+void *Memcpy(void *dst, const void* src, size_t len){
+	if (NULL == dst || NULL == src)
+		return NULL;
+
+	void *res = dst;
+	if (dst < src || (char*)dst > (char*)src + len){
+		// 目标地址在源地址前面，或者目标地址在源地址开始的len范围的后面，可以从低地址开始复制
+		while (len--){
+			*(char*)dst = *(char*)src;
+			dst = (char *)dst + 1;
+			src = (char *)src + 1;
+		}
+	}
+	else{
+		// 源地址在目标地址前面，只能从高地址开始复制
+		src = (char*)src + len - 1;
+		dst = (char*)dst + len - 1;
+		while (len--){
+			*(char*)dst = *(char*)src;
+			dst = (char *)dst - 1;
+			src = (char *)src - 1;
+		}
+	}
+	return res;
+}
+```
+
+实现复制函数，首先要判断给定两个指针是否为空，然后要注意地址是否由重叠，分情况进行从低地址复制还是从高地址复制。
 
 
 
