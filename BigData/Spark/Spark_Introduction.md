@@ -57,38 +57,64 @@ Apache 顶级项目，速度之快足见过人之处，Spark 以其先进的设�
 * 数据量不是特别大，但要求**实时统计分析需求**。
 
 
-### 4. 
+### 4. Spark 术语
+
+##### 运行模式
+
+* **Local --本地模式**：常用于本地开发测试，本地还分为 local 单线程和 local-cluster 多线程；
+* **Standalone -- 集群模式**：典型的 Master/slave 模式，不过也能看出 Master 是有单点故障的；Spark 支持 ZooKeeper 来实现 HA；
+* **On yarn -- 集群模式**：运行在 yarn 资源管理器框架之上，由 yarn 负责资源管理，Spark 负责任务调度和计算；
+* **On mesos -- 集群模式**：运行在 mesos 资源管理器框架之上，由 mesos 负责资源管理，Spark 负责任务调度和计算；
+* **On cloud -- 集群模式**：比如 AWS（亚马逊）的 EC2，使用这个模式能很方便的访问 Amazon 的 S3；Spark 支持多种分布式存储系统：HDFS 和 S3。
+
+##### 常用术语
+
+![](http://7xrluf.com1.z0.glb.clouddn.com/spark%E6%9C%AF%E8%AF%AD.png)
 
 
 
+### 5. 生态系统
+
+​    Spark 生态圈是以 **Spark Core 为核心**，从 HDFS、Amazon S3 和 HBase 等持久层读取数据，以 MESS、YARN 和自身携带的 Standalone 为资源管理器调度 Job 完成 Spark 应用程序的计算，这些应用程序可以来自于不同的组件，如 Spark Shell / Spark Submit 的批处理、Spark Streaming 的实时处理应用、Spark SQL 的即席查询、BlinkDB 的权衡查询、MLlib / MLbase 的机器学习、GraphX 的图处理和 SparkR 的数学计算等。其生态系统如下图所示：
+
+![](http://7xrluf.com1.z0.glb.clouddn.com/spark%E7%94%9F%E6%80%81%E7%B3%BB%E7%BB%9F.png)
+
+接下来简单介绍各个组件。
+
+##### Spark Core
+
+总结下 Spark 内核架构：
+
+* 提供了**有向无环图（DAG）**的分布式并行计算框架，并提供 **Cache 机制**来支持多次迭
+  代计算或者数据共享，**大大减少迭代计算之间读取数据局的开销**，这对于需要进行多次
+  迭代的数据挖掘和分析性能有很大提升；
+
+* 在 Spark 中引入了 **RDD (Resilient Distributed Dataset)** 的抽象，它是分布在一组节
+  点中的只读对象集合，这些集合是弹性的，如果数据集一部分丢失，则可以根据“ 血统”
+  对它们进行重建，**保证了数据的高容错性**； 
+
+* **移动计算而非移动数据**，RDD Partition 可以**就近读取分布式文件系统中的数据块**到各
+  个节点内存中进行计算 ；
+
+* 使用多线程池模型来减少 task 启动开销；
+
+* 采用容错的、高可伸缩性的 akka 作为通讯框架。
+
+
+##### SparkStreaming
+
+​       SparkStreaming 是有个对实时数据流进行高通量、容错处理的流式处理系统，可以对多种数据源（如 Kdfka、Flume、Twitter、Zero 和 TCP 套接字）进行类似 Map、Reduce 和 Join 等复杂操作，并将结果保存到外部文件系统、数据库或应用到实时仪表盘。
+
+​       SparkStreaming的构架如下：
+
+* 计算流程：**Spark Streaming 是将流式计算分解成一系列短小的批处理作业。**这里的批处理引擎是 Spark Core，也就是把 Spark Streaming 的输入数据按照 batch size（如 1 秒）分成一段一段的数据（Discretized Stream），**每一段数据都转换成 Spark 中的 RDD（Resilient Distributed Dataset），**然后将 Spark Streaming 中对 DStream 的 Transformation 操作变为针对 Spark 中对 RDD 的 Transformation 操作，将 RDD 经过操作变成中间结果保存在内存中。整个流式计算根据业务的需求可以对中间的结果进行叠加或者存储到外部设备。 下图显示了 Spark Streaming 的整个流程。 
+
+![](http://7xrluf.com1.z0.glb.clouddn.com/SparkStreaming%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B.png)
+
+* 容错性：对于流式计算来说，容错性至关重要。
+
+##### Spark SQL
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##### BlinkDB
