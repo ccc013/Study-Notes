@@ -28,9 +28,9 @@ C++有阅读《C++ primer plus》的读书笔记，完成前面13章的[阅读�
 
 欢迎关注我的微信公众号、我的 CSDN 博客，开发者头条独家号和掘金个人号，一起交流和学习，一起进步！
 
-- 我的微信公众号--机器学习与计算机视觉，也可以扫描下方的二维码关注：
+- 我的微信公众号--AI算法笔记，也可以扫描下方的二维码关注：
 
-  ![公众号二维码](https://cai-images-1257823952.cos.ap-beijing.myqcloud.com/qrcode_new.jpg)
+  ![](https://img-blog.csdnimg.cn/20210620155918137.jpeg#pic_center)
 
 - [我的个人博客](http://ccc013.github.io)
 
