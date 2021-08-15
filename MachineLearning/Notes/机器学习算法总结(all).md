@@ -225,6 +225,10 @@ g\prime (z)  =  \frac{d}{dz} \frac{1}{1+e^{-z}} \\
 		 = g(z)(1-g(z))
 $$
 
+先验分布是伯努利分布
+
+
+
 #### 代价函数
 
 逻辑回归方法主要是用最大似然估计来学习的，所以单个样本的后验概率为：
@@ -769,7 +773,7 @@ predicted= model.predict(x_test)
 
 ##### 缺点
 
-1. 随机森林已经被证明在某些**噪音较大**的分类或回归问题上会过拟
+1. 随机森林已经被证明在某些**噪音较大**的分类或回归问题上会过拟合
 2. 对于有不同取值的属性的数据，**取值划分较多的属性会对随机森林产生更大的影响**，所以随机森林在这种数据上产出的属性权值是不可信的。
 
 #### 与 bagging 的区别
@@ -778,7 +782,7 @@ predicted= model.predict(x_test)
 
 2. bagging是用**全部特征**来得到分类器，而Random forest是需要从全部特征中**选取其中的一部分**来训练得到分类器； **一般Random forest效果比bagging效果好！**
 
-   ​
+   
 
 #### 代码实现
 
@@ -956,7 +960,7 @@ SMO是用于快速求解SVM的，是一种启发式算法。
 
 而$η$实际上是度量两个样本$i和j$的相似性的。在计算$η$的时候，我们需要使用核函数，那么就可以用核函数来取代上面的内积。
 
-得到新的$α_j​$后，我们需要保证它处于边界内。换句话说，如果这个优化后的值跑出了边界L和H，我们就需要简单的裁剪，将$α_j​$收回这个范围：
+得到新的$α_j$后，我们需要保证它处于边界内。换句话说，如果这个优化后的值跑出了边界L和H，我们就需要简单的裁剪，将$α_j$收回这个范围：
 
 ![](https://img-blog.csdn.net/20170216163645193?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGMwMTM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
@@ -1066,7 +1070,7 @@ plt.show()
 
 SVM 的知识点就总结到这里，还是参考了不少文章和看书才完成，但是需要继续通过实践才能加深对 SVM 的了解。
 
-#### 6. 朴素贝叶斯
+### 6. 朴素贝叶斯
 
 参考文章：
 
@@ -1354,14 +1358,14 @@ $$
 
 #### 优缺点
 
-优点
+##### 优点
 
 1. **思想简单，理论成熟，既可以用来做分类也可以用来做回归**；
 2. 可用于**非线性分类**；
 3. 训练时间复杂度为$O(n)$；
 4. 准确度高，对数据没有假设，对**异常值**不敏感；
 
-#### 缺点
+##### 缺点
 
 1. **计算量大**；
 2. **样本不平衡问题**（即有些类别的样本数量很多，而其它样本的数量很少）；
@@ -1422,200 +1426,7 @@ predicted= model.predict(x_test)
 - 所有特征应该**标准化数量级**，否则数量级大的特征在计算距离上会有偏移。
 - 在进行KNN前**预处理数据**，例如去除异常值，噪音等。
 
-### 8 K-均值算法
 
-参考自：
-
-- 《机器学习》
-- [机器学习&数据挖掘笔记_16（常见面试之机器学习算法思想简单梳理）](http://www.cnblogs.com/tornadomeet/p/3395593.html)
-- [K-Means Clustering](http://www.johnwittenauer.net/machine-learning-exercises-in-python-part-7/)
-- [斯坦福大学公开课 ：机器学习课程](http://v.163.com/special/opencourse/machinelearning.html)
-
-#### 简介
-
-> K-均值是最普及的聚类算法，算法接受一个未标记的数据集，然后将数据集聚类成不同的组。
-
-K-均值是一个迭代算法，假设我们想要将数据聚类成 n 个组，其方法为：
-
-1. 首先选择 **K** 个随机的点，称其为**聚类中心**
-2. 对于数据集中的每一个数据，按照距离 **K** 个中心点的距离，将其与距离最近的中心点关联起来，与同一个中心点关联的所有点聚成一个类
-3. 计算每一个组的**平均值**，将该组所关联的中心点移动到平均值的位置
-4. 重复步骤 2-3，直到中心点不再变化
-
-这个过程中分两个主要步骤，第一个就是第二步，将训练集中的样本点根据其与聚类中心的距离，分配到距离最近的聚类中心处，接着第二个就是第三步，更新类中心，做法是计算每个类的所有样本的平均值，然后将这个平均值作为新的类中心值，接着继续这两个步骤，直到达到终止条件，一般是指达到设定好的迭代次数。
-
-当然在这个过程中可能遇到有聚类中心是没有分配数据点给它的，通常的一个做法是**删除这种聚类中心，或者是重新选择聚类中心，保证聚类中心数还是初始设定的 K 个**。
-
-#### 优化目标
-
-K-均值最小化问题，就是**最小化所有的数据点与其所关联的聚类中心之间的距离之和**，因此K-均值的代价函数（又称为**畸变函数**）为： 
-$$
-J(c^{(1)},c^{(2)},…,c^{(m)},μ_1,μ_2,…,μ_m)=\frac{1}{m}∑_{i=1}^m||x^(i)−μ_{c^(i)}||^2
-$$
-其中$\mu_{c^{(i)}}$代表与$x^{(i)}$最近的聚类中心点。
-
-所以我们的优化目标是找出是的代价函数最小的$和c^{(1)},c^{(2)},\ldots,c^{(m)}和\mu_1,\mu_2,\ldots,\mu_m$: 
-$$
-min_{c^{(1)},c^{(2)},\ldots,c^{(m)}, \mu_1,\mu_2,\ldots,\mu_m}J(c^{(1)},c^{(2)},\ldots,c^{(m)},\mu_1,\mu_2,\ldots,\mu_m)
-$$
-回顾K-均值迭代算法的过程可知，第一个循环就是用于减小$c^{(i)}$引起的代价，而第二个循环则是用于减小$μ_i$引起的代价，因此，**迭代的过程一定会是每一次迭代都在减小代价函数，不然便是出现了错误。**
-
-#### 随机初始化
-
-在运行 K-均值算法之前，首先需要随机初始化所有的聚类中心点，做法如下：
-
-1. 首先应该选择 $K<m$ ,即**聚类中心点的个数要小于所有训练集实例的数量**
-2. 随机选择 $K$ 个训练实例，然后令 $K$ 个聚类中心分别和这 K 个训练实例相等
-
-K-均值的一个问题在于，**它有可能会停留在一个局部最小值处，而这取决于初始化的情况。**
-
-为了解决这个问题，通常需要**多次运行 K-均值算法，每一次都重新进行随机初始化，最后再比较多次运行K-均值的结果，选择代价函数最小的结果。**这种方法在 **K较小（2-10）**的时候还是可行的，但是如果 K 较大，这种做法可能不会有明显地改善。
-
-#### 优缺点
-
-优点
-
-1. k-means算法是解决聚类问题的一种经典算法，**算法简单、快速**。
-2. 对处理大数据集，该算法是**相对可伸缩的和高效率**的，因为它的复杂度大约是 $O(nkt)$，其中$n$是所有对象的数目，$k$ 是簇的数目, $t$ 是迭代的次数。通常$ $。这个算法通常**局部收敛**。
-3. 算法尝试找出**使平方误差函数值最小的 k 个划分**。当簇是密集的、球状或团状的，且**簇与簇之间区别明显**时，聚类效果较好。
-
-#### 缺点
-
-1. k-平均方法只有在簇的**平均值被定义**的情况下才能使用，且对有些分类属性的数据不适合。
-2. 要求用户必须事先给出要生成的簇的数目$k$。
-3. **对初值敏感**，对于不同的初始值，可能会导致不同的聚类结果。
-4. **不适合于发现非凸面形状的簇，或者大小差别很大的簇**。
-5. 对于**"噪声"和孤立点数据敏感**，少量的该类数据能够对平均值产生极大影响。
-
-#### 代码实现
-
-代码参考自[K-Means Clustering](http://www.johnwittenauer.net/machine-learning-exercises-in-python-part-7/)。
-
-```python
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-@Time    : 2016/10/21 16:35
-@Author  : cai
-
-实现 K-Means 聚类算法
-"""
-
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.io import loadmat
-import os
-
-# 寻址最近的中心点
-def find_closest_centroids(X, centroids):
-    m = X.shape[0]
-    k = centroids.shape[0]
-    idx = np.zeros(m)
-
-    for i in range(m):
-        min_dist = 1000000
-        for j in range(k):
-            # 计算每个训练样本和中心点的距离
-            dist = np.sum((X[i, :] - centroids[j, :]) ** 2)
-            if dist < min_dist:
-                # 记录当前最短距离和其中心的索引值
-                min_dist = dist
-                idx[i] = j
-
-    return idx
-
-# 计算聚类中心
-def compute_centroids(X, idx, k):
-    m, n = X.shape
-    centroids = np.zeros((k, n))
-
-    for i in range(k):
-        indices = np.where(idx == i)
-        # 计算下一个聚类中心，这里简单的将该类中心的所有数值求平均值作为新的类中心
-        centroids[i, :] = (np.sum(X[indices, :], axis=1) / len(indices[0])).ravel()
-
-    return centroids
-
-# 初始化聚类中心
-def init_centroids(X, k):
-    m, n = X.shape
-    centroids = np.zeros((k, n))
-    # 随机初始化 k 个 [0,m]的整数
-    idx = np.random.randint(0, m, k)
-
-    for i in range(k):
-        centroids[i, :] = X[idx[i], :]
-
-    return centroids
-
-# 实现 kmeans 算法
-def run_k_means(X, initial_centroids, max_iters):
-    m, n = X.shape
-    # 聚类中心的数目
-    k = initial_centroids.shape[0]
-    idx = np.zeros(m)
-    centroids = initial_centroids
-
-    for i in range(max_iters):
-        idx = find_closest_centroids(X, centroids)
-        centroids = compute_centroids(X, idx, k)
-
-    return idx, centroids
-
-dataPath = os.path.join('data', 'ex7data2.mat')
-data = loadmat(dataPath)
-X = data['X']
-
-initial_centroids = init_centroids(X, 3)
-# print(initial_centroids)
-# idx = find_closest_centroids(X, initial_centroids)
-# print(idx)
-
-# print(compute_centroids(X, idx, 3))
-
-idx, centroids = run_k_means(X, initial_centroids, 10)
-# 可视化聚类结果
-cluster1 = X[np.where(idx == 0)[0], :]
-cluster2 = X[np.where(idx == 1)[0], :]
-cluster3 = X[np.where(idx == 2)[0], :]
-
-fig, ax = plt.subplots(figsize=(12, 8))
-ax.scatter(cluster1[:, 0], cluster1[:, 1], s=30, color='r', label='Cluster 1')
-ax.scatter(cluster2[:, 0], cluster2[:, 1], s=30, color='g', label='Cluster 2')
-ax.scatter(cluster3[:, 0], cluster3[:, 1], s=30, color='b', label='Cluster 3')
-ax.legend()
-plt.show()
-
-# 载入一张测试图片，进行测试
-imageDataPath = os.path.join('data', 'bird_small.mat')
-image = loadmat(imageDataPath)
-# print(image)
-
-A = image['A']
-print(A.shape)
-
-# 对图片进行归一化
-A = A / 255.
-
-# 重新调整数组的尺寸
-X = np.reshape(A, (A.shape[0] * A.shape[1], A.shape[2]))
-# 随机初始化聚类中心
-initial_centroids = init_centroids(X, 16)
-# 运行聚类算法
-idx, centroids = run_k_means(X, initial_centroids, 10)
-
-# 得到最后一次的最近中心点
-idx = find_closest_centroids(X, centroids)
-# map each pixel to the centroid value
-X_recovered = centroids[idx.astype(int), :]
-# reshape to the original dimensions
-X_recovered = np.reshape(X_recovered, (A.shape[0], A.shape[1], A.shape[2]))
-
-# plt.imshow(X_recovered)
-# plt.show()
-```
-
-完整代码例子和数据可以查看[Kmeans练习代码](https://github.com/ccc013/CodingPractise/blob/master/Python/MachineLearning/kMeansPractise.py)。
 
 ### 9 提升方法
 
@@ -1679,7 +1490,6 @@ X_recovered = np.reshape(X_recovered, (A.shape[0], A.shape[1], A.shape[2]))
 > $$
 > \prod_{m=1}^M Z_m = \prod_{m=1}^M [2\sqrt{e_m(1-e_m)}] = \prod_{m=1}^M [\sqrt{1-4\gamma_m^2} \le exp(-2\sum_{m=1}^M \gamma_m^2)
 > $$
->
 
 ##### 算法解释
 
@@ -2036,7 +1846,6 @@ $$
 > 其中， \alpha_k 是系数，\alpha_k \ge 0, \sum_{k=1}^K \alpha_k = 1; \phi(y|\theta_k)是高斯分布密度，\theta_k = (\mu_k, \sigma_k^2), \\
 > \phi(y|\theta_k) = \frac{1}{\sqrt{2 \pi} \sigma_k} exp(-\frac{(y-\mu_k)^2}{2\sigma_k^2})
 > $$
->
 
 $\phi(y|\theta_k)$称为第$k$个分模型。
 
